@@ -7,10 +7,10 @@ export const Menu = () => {
             <ul>
                 {
                     routes.map(route => (
-                        <li>
+                        <li key={route.text}>
                             <NavLink
                                 style={({isActive}) => ({
-                                    color: isActive ? 'blue' : 'red'
+                                    color: isActive ? 'red' : 'blue'
                                 })}
                                 to={route.to}
                             >
