@@ -4,19 +4,19 @@ blogData.push(
         title: '¿Que es React js?',
         slug: 'react-js',
         content: 'Es el mejor framework de Javascript',
-        author: 'Ivan tabera'
+        author: 'Ivan'
     },
     {
         title: '¿Que es Angular?',
         slug: 'angular-js',
         content: 'Es el mejor framework de Javascript',
-        author: 'Fernando tabera'
+        author: 'Fernando'
     },
     {
         title: '¿Que es Vue js?',
         slug: 'vue-js',
         content: 'Es el mejor framework de Javascript',
-        author: 'Aurora tabera'
+        author: 'Aurora'
     }
 )
 

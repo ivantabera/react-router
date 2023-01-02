@@ -3,12 +3,16 @@ import {Navigate, useNavigate} from "react-router-dom";
 
 const AuthContext = createContext();
 
-export const  AuthProvider = ({children}) => {
+const admin = ['ivanTabera', 'juanFer', 'auro'];
+
+export const AuthProvider = ({children}) => {
     const navigate = useNavigate();
     const [user, setUser] = useState(undefined);
+    console.log(user);
 
     const login = ({username}) => {
-        setUser({username});
+        const isAdmin = admin.find(adm => adm === username);
+        setUser({username, isAdmin});
         navigate('/profile')
     }
 
@@ -34,7 +38,7 @@ export const useAuth = () => {
 export const AuthProtectedRoute = (props) => {
     const auth = useAuth();
     if (!auth.user) {
-        return <Navigate to="/loginPage" />
+        return <Navigate to="/loginPage"/>
     }
     return props.children;
 }
