@@ -18,7 +18,6 @@ function AuthProvider({children}) {
     }
 
     const auth = {user, login, logout};
-    console.log(auth);
 
     return (
         <AuthContext.Provider value={auth}>

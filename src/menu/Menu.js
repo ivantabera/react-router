@@ -1,12 +1,18 @@
 import React from "react";
 import {NavLink} from "react-router-dom";
+import {useAuth} from "../auth/auth";
 export const Menu = () => {
+    const auth = useAuth();
 
     return(
         <nav>
             <ul>
                 {
-                    routes.map(route => (
+                    routes.map(route => {
+                        if(route.publicOnly && auth.user) return null;
+                        if (route.private && !auth.user) return null;
+
+                        return(
                         <li key={route.text}>
                             <NavLink
                                 style={({isActive}) => ({
@@ -16,8 +22,8 @@ export const Menu = () => {
                             >
                                 {route.text}
                             </NavLink>
-                        </li>
-                    ))
+                        </li>)
+                    })
                 }
             </ul>
         </nav>
@@ -28,22 +34,28 @@ const routes = [];
 routes.push(
     {
         to: '/',
-        text: 'Home'
+        text: 'Home',
+        private: false
     },
     {
         to: '/blog',
-        text: 'Blog'
+        text: 'Blog',
+        private: false
     },
     {
         to: '/profile',
-        text: 'Profile'
+        text: 'Profile',
+        private: true
     },
     {
         to: '/loginPage',
-        text: 'Login'
+        text: 'Login',
+        private: false,
+        publicOnly: true
     },
     {
         to: '/logout',
-        text: 'Logout'
+        text: 'Logout',
+        private: true
     }
 )
