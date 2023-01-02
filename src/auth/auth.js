@@ -8,7 +8,6 @@ const admin = ['ivanTabera', 'juanFer', 'auro'];
 export const AuthProvider = ({children}) => {
     const navigate = useNavigate();
     const [user, setUser] = useState(undefined);
-    console.log(user);
 
     const login = ({username}) => {
         const isAdmin = admin.find(adm => adm === username);
