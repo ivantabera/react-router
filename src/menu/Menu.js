@@ -37,5 +37,13 @@ routes.push(
     {
         to: '/profile',
         text: 'Profile'
+    },
+    {
+        to: '/loginPage',
+        text: 'Login'
+    },
+    {
+        to: '/logout',
+        text: 'Logout'
     }
 )
