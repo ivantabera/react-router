@@ -2,6 +2,7 @@ import React from "react";
 import {useAuth} from "../auth/auth";
 export const Profile = () => {
     const auth = useAuth();
+
     return(
         <>
             <h1>ProfilePage</h1>

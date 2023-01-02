@@ -6,7 +6,7 @@ import {Profile} from "./profile/Profile";
 import {BlogPost} from "./blog/blogpost/BlogPost";
 import {LoginPage} from "./loginPage/LoginPage";
 import {Logout} from "./logout/Logout";
-import {AuthProvider} from "./auth/auth";
+import {AuthProtectedRoute, AuthProvider} from "./auth/auth";
 
 function App() {
   return (
@@ -23,8 +23,24 @@ function App() {
                 </Route>
 
                 <Route path="/loginPage" element={<LoginPage />} />
-                <Route path="/logout" element={<Logout />} />
-                <Route path="/profile" element={<Profile />} />
+
+                <Route
+                    path="/logout"
+                    element={
+                    <AuthProtectedRoute>
+                        <Logout />
+                    </AuthProtectedRoute>
+                }
+                />
+
+                <Route
+                    path="/profile"
+                    element={
+                        <AuthProtectedRoute>
+                            <Profile />
+                        </AuthProtectedRoute>
+                    }
+                />
 
                 <Route path="*" element={<h1>Not found</h1>} />
           </Routes>
