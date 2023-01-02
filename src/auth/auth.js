@@ -3,7 +3,7 @@ import {Navigate, useNavigate} from "react-router-dom";
 
 const AuthContext = createContext();
 
-function AuthProvider({children}) {
+export const  AuthProvider = ({children}) => {
     const navigate = useNavigate();
     const [user, setUser] = useState(undefined);
 
@@ -26,21 +26,15 @@ function AuthProvider({children}) {
     )
 }
 
-const useAuth = () => {
+export const useAuth = () => {
     const auth = useContext(AuthContext);
     return auth;
 }
 
-const AuthProtectedRoute = (props) => {
+export const AuthProtectedRoute = (props) => {
     const auth = useAuth();
     if (!auth.user) {
         return <Navigate to="/loginPage" />
     }
     return props.children;
-}
-
-export {
-    AuthProvider,
-    AuthProtectedRoute,
-    useAuth
 }
