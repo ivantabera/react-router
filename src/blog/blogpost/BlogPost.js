@@ -1,29 +1,29 @@
 import React from "react";
 import {useNavigate, useParams} from "react-router-dom";
-import {blogData} from "../../data/blogData";
-import {useAuth} from "../../auth/auth";
+import {BlogPostItem} from "../blogPostItem/BlogPostItem";
 
-export const BlogPost = () => {
-    const auth = useAuth();
+export const BlogPost = (props) => {
     const navigate = useNavigate();
     const {slug} = useParams();
 
-    const findPost = blogData.find(post => post.slug === slug);
+    const findPost = props.allPost.find(post => post.slug === slug);
 
     const onReturn = () => {
         navigate('/blog')
     }
 
-    const canDelete = auth.user?.isAdmin || findPost.author === auth.user?.username;
-
-    return(
+    return (
         <>
-            <h2>{findPost.title}</h2>
-            <button onClick={onReturn}>Volver a los post</button>
-            <p>{findPost.content}</p>
-            <p>{findPost.author}</p>
+            {props.error && props.onError()}
+            {props.loading && props.onLoading()}
 
-            {canDelete && (<button>Eliminar</button>)}
+            {(!props.loading && !props.error) &&
+                <BlogPostItem
+                    findpost={findPost}
+                />
+            }
+
+            <button onClick={onReturn}>Volver a los post</button>
         </>
     )
 }

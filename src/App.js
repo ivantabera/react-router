@@ -1,3 +1,4 @@
+import React from "react";
 import {HashRouter, Routes, Route} from "react-router-dom";
 import {Menu} from "./menu/Menu";
 import {Home} from "./home/Home";
@@ -7,46 +8,67 @@ import {BlogPost} from "./blog/blogpost/BlogPost";
 import {LoginPage} from "./loginPage/LoginPage";
 import {Logout} from "./logout/Logout";
 import {AuthProtectedRoute, AuthProvider} from "./auth/auth";
+import {usePosts} from "./hooks/usePosts";
+import {PostError} from "./messaggeComponent/postError/PostError";
+import {PostLoading} from "./messaggeComponent/postLoading/PostLoading";
+import {PostEmpty} from "./messaggeComponent/postEmpty/PostEmpty";
 
 function App() {
-  return (
-    <HashRouter>
-        <AuthProvider>
-          <Menu />
 
-          <Routes>
-                <Route path="/" element={<Home />} />
+    const {
+        error,
+        loading,
+        allPost
+    } = usePosts();
 
-                {/*Nested routes*/}
-                <Route path="/blog" element={<Blog />} >
-                    <Route path=":slug" element={<BlogPost />} />
-                </Route>
+    return (
+        <HashRouter>
+            <AuthProvider>
+                <Menu/>
 
-                <Route path="/loginPage" element={<LoginPage />} />
+                <Routes>
+                    <Route path="/" element={<Home/>}/>
 
-                <Route
-                    path="/logout"
-                    element={
-                    <AuthProtectedRoute>
-                        <Logout />
-                    </AuthProtectedRoute>
-                }
-                />
+                    {/*Nested routes*/}
+                    <Route path="/blog" element={<Blog/>}>
+                        <Route path=":slug" element={
+                            <BlogPost
+                                error={error}
+                                loading={loading}
+                                allPost={allPost}
+                                onError={() => <PostError/>}
+                                onLoading={() => <PostLoading/>}
+                                onEmpty={() => <PostEmpty/>}
+                            />
+                        }
+                        />
+                    </Route>
 
-                <Route
-                    path="/profile"
-                    element={
-                        <AuthProtectedRoute>
-                            <Profile />
-                        </AuthProtectedRoute>
-                    }
-                />
+                    <Route path="/loginPage" element={<LoginPage/>}/>
 
-                <Route path="*" element={<h1>Not found</h1>} />
-          </Routes>
-        </AuthProvider>
-    </HashRouter>
-  );
+                    <Route
+                        path="/logout"
+                        element={
+                            <AuthProtectedRoute>
+                                <Logout/>
+                            </AuthProtectedRoute>
+                        }
+                    />
+
+                    <Route
+                        path="/profile"
+                        element={
+                            <AuthProtectedRoute>
+                                <Profile/>
+                            </AuthProtectedRoute>
+                        }
+                    />
+
+                    <Route path="*" element={<h1>Not found</h1>}/>
+                </Routes>
+            </AuthProvider>
+        </HashRouter>
+    );
 }
 
 export default App;
